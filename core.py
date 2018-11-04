@@ -1,4 +1,5 @@
 import tensorflow as tf
+import datetime
 
 Input = tf.placeholder("float", shape=[None, 2], name="Input")
 Target = tf.placeholder("float", shape=[None, 1], name="Target")
@@ -31,8 +32,7 @@ epochs = 4000
 with tf.Session() as sess:
     tf.global_variables_initializer().run()
     mergedSummary = tf.summary.merge_all()
-    import datetime
-    fileName="./summary_log/run"
+    fileName="./summary_log/run"+datetime.datetime.now().strftime("%Y-%m-%d--%H-%M-%s")
     writer = tf.summary.FileWriter(fileName, sess.graph)
     for i in range(epochs):
         err, _, summaryOutput = sess.run([cost, optimizer, mergedSummary], feed_dict={Input: inp, Target: out})
